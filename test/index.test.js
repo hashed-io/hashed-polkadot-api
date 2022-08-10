@@ -24,4 +24,9 @@ describe('Request data from marketplace pallet', () => {
         console.log('marketplace', marketplace)
         expect(marketplace).toBeDefined()
     })
+    test('Get participants by marketplace', async () => {
+        const participants = await marketplaceApi.getParticipantsByMarket({ marketId: '0xa54035afb49b42cdacbe27c830dd1b66078069886e80cdd8bab3d139caa0489e' })
+        console.log('participants', participants)
+        expect(participants).toBeDefined()
+    })
 })
