@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/model/polkadot-pallets/marketplaceApi.js</title>
+    <title>Code coverage report for model/polkadot-pallets/marketplaceApi.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../../prettify.css" />
-    <link rel="stylesheet" href="../../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../../sort-arrow-sprite.png);
+            background-image: url(../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/model/polkadot-pallets</a> marketplaceApi.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">model/polkadot-pallets</a> marketplaceApi.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">1.63% </span>
+                <span class="strong">5.73% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/122</span>
+                <span class='fraction'>7/122</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">12.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>1/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">4.87% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/41</span>
+                <span class='fraction'>2/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">1.76% </span>
+                <span class="strong">6.19% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/113</span>
+                <span class='fraction'>7/113</span>
             </div>
         
             
@@ -505,7 +505,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -515,10 +515,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -940,8 +940,8 @@
 // import participants from '~/services/const/participants'
 // import applicants from '~/services/const/applicants'
 class MarketplaceApi extends BasePolkadotApi {
-<span class="fstat-no" title="function not covered" >  co</span>nstructor (polkadotApi, notify) {
-<span class="cstat-no" title="statement not covered" >    super(polkadotApi, 'gatedMarketplace', notify)</span>
+  constructor (polkadotApi, notify) {
+    super(polkadotApi, 'gatedMarketplace', notify)
   }
 &nbsp;
   /**
@@ -950,11 +950,11 @@ class MarketplaceApi extends BasePolkadotApi {
    * @param {Function} subTrigger Function to trigger when subscription detect changes
    * @returns {Object}
    */
-<span class="fstat-no" title="function not covered" >  as</span>ync getMarketplaceById ({ marketId }, subTrigger) {
-<span class="cstat-no" title="statement not covered" >    console.log('getMarketplaceById', marketId)</span>
-    const market = <span class="cstat-no" title="statement not covered" >await this.exQuery('marketplaces', [marketId])</span>
-<span class="cstat-no" title="statement not covered" >    if (!market.isEmpty) {</span>
-<span class="cstat-no" title="statement not covered" >      return market.toHuman()</span>
+  async getMarketplaceById ({ marketId }, subTrigger) {
+    console.log('getMarketplaceById', marketId)
+    const market = await this.exQuery('marketplaces', [marketId])
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!market.isEmpty) {
+      return market.toHuman()
     }
 <span class="cstat-no" title="statement not covered" >    return undefined</span>
   }
@@ -1378,16 +1378,16 @@ module.exports = MarketplaceApi
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-08-10T22:04:21.686Z
+                at 2022-08-10T22:27:18.346Z
             </div>
-        <script src="../../../prettify.js"></script>
+        <script src="../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../../sorter.js"></script>
-        <script src="../../../block-navigation.js"></script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
     </body>
 </html>
     

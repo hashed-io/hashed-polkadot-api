@@ -12,7 +12,7 @@ class PolkadotApi {
   constructor (wss) {
     this.wss = wss
     // this.wss = 'wss://n4.hashed.systems'
-    console.log('polkadotApi constructor', wss, process.env.WSS)
+    console.log('polkadotApi constructor', wss)
     this.api = undefined
   }
 
@@ -30,7 +30,6 @@ class PolkadotApi {
       // Create the API and wait until ready
       const api = new ApiPromise({ provider })
       this.api = api
-      console.log('api', api)
       // const api = await ApiPromise.create({ provider })
 
       // console.log('apiPromise', api)
