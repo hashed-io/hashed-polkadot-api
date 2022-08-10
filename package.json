@@ -1,6 +1,6 @@
 {
   "name": "@jmgayosso/hashed-polkadot-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Client API that handles calls and queries to interact with hashed gatedMarketplace pallet using polkadotJS extension",
   "main": "src/index.js",
   "scripts": {
