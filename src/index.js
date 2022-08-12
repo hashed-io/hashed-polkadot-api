@@ -3,5 +3,6 @@ const { NbvStorageApi, MarketplaceApi } = require('../src/model/polkadot-pallets
 
 module.exports = {
   PolkadotApi,
-  MarketplaceApi
+  MarketplaceApi,
+  NbvStorageApi
 }

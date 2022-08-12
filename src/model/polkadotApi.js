@@ -9,23 +9,24 @@ const { isHex, hexToU8a, u8aToHex, u8aWrapBytes } = require('@polkadot/util')
 const { signatureVerify } = require('@polkadot/util-crypto')
 
 class PolkadotApi {
-  constructor (wss) {
-    this.wss = wss
-    // this.wss = 'wss://n4.hashed.systems'
-    console.log('polkadotApi constructor', wss)
+  constructor ({ chainURI, appName }) {
+    this.chainURI = chainURI
+    // this.chainURI = 'chainURI://n4.hashed.systems'
+    console.log('polkadotApi constructor', chainURI)
     this.api = undefined
+    this.appName = appName
   }
 
   /**
-   * @description Connect to WSS server and get api
+   * @description Connect to chainURI server and get api
    * @returns {Object}
    * { chain, nodeName, nodeVersion }
    */
   async connect () {
     try {
       // Initialize the provider to connect to the local node
-      console.log('connecting to ', this.wss)
-      const provider = new WsProvider(this.wss)
+      console.log('connecting to ', this.chainURI)
+      const provider = new WsProvider(this.chainURI)
 
       // Create the API and wait until ready
       const api = new ApiPromise({ provider })
@@ -47,7 +48,7 @@ class PolkadotApi {
           if (failedCount <= 10) {
             failedCount++
           } else {
-            reject(`An error ocurred trying to connect at ${this.wss}`)
+            reject(`An error ocurred trying to connect at ${this.chainURI}`)
           }
         })
         api.on('ready', async (v) => {
@@ -86,7 +87,7 @@ class PolkadotApi {
    */
   async signMessage (message, signer) {
     // Get signer
-    await web3Enable(process.env.APP_NAME)
+    await web3Enable(this.appName)
     const injector = await web3FromAddress(signer)
 
     // Create Message
@@ -120,7 +121,7 @@ class PolkadotApi {
   */
   async requestUsers () {
     // (this needs to be called first, before other requests)
-    await web3Enable(process.env.APP_NAME)
+    await web3Enable(this.appName)
     // meta.source contains the name of the extension that provides this account
     return web3Accounts()
   }
@@ -162,7 +163,7 @@ class PolkadotApi {
    */
   async setWeb3Signer (user) {
     // Enable web3 plugin
-    await web3Enable(process.env.APP_NAME)
+    await web3Enable(this.appName)
     // Get injector to call a Extrinsic
     const injector = await web3FromAddress(user)
     // Set signer
