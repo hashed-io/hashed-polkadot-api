@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.19% </span>
+                <span class="strong">54.16% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/47</span>
+                <span class='fraction'>26/48</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.19% </span>
+                <span class="strong">54.16% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/47</span>
+                <span class='fraction'>26/48</span>
             </div>
         
             
@@ -237,7 +237,8 @@
 <a name='L172'></a><a href='#L172'>172</a>
 <a name='L173'></a><a href='#L173'>173</a>
 <a name='L174'></a><a href='#L174'>174</a>
-<a name='L175'></a><a href='#L175'>175</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -251,6 +252,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -422,23 +424,24 @@ const { isHex, hexToU8a, u8aToHex, u8aWrapBytes } = require('@polkadot/util')
 const { signatureVerify } = require('@polkadot/util-crypto')
 &nbsp;
 class PolkadotApi {
-  constructor (wss) {
-    this.wss = wss
-    // this.wss = 'wss://n4.hashed.systems'
-    console.log('polkadotApi constructor', wss)
+  constructor ({ chainURI, appName }) {
+    this.chainURI = chainURI
+    // this.chainURI = 'chainURI://n4.hashed.systems'
+    console.log('polkadotApi constructor', chainURI)
     this.api = undefined
+    this.appName = appName
   }
 &nbsp;
   /**
-   * @description Connect to WSS server and get api
+   * @description Connect to chainURI server and get api
    * @returns {Object}
    * { chain, nodeName, nodeVersion }
    */
   async connect () {
     try {
       // Initialize the provider to connect to the local node
-      console.log('connecting to ', this.wss)
-      const provider = new WsProvider(this.wss)
+      console.log('connecting to ', this.chainURI)
+      const provider = new WsProvider(this.chainURI)
 &nbsp;
       // Create the API and wait until ready
       const api = new ApiPromise({ provider })
@@ -460,7 +463,7 @@ class PolkadotApi {
 <span class="cstat-no" title="statement not covered" >          if (failedCount &lt;= 10) {</span>
 <span class="cstat-no" title="statement not covered" >            failedCount++</span>
           } else {
-<span class="cstat-no" title="statement not covered" >            reject(`An error ocurred trying to connect at ${this.wss}`)</span>
+<span class="cstat-no" title="statement not covered" >            reject(`An error ocurred trying to connect at ${this.chainURI}`)</span>
           }
         })
         api.on('ready', async (v) =&gt; {
@@ -499,7 +502,7 @@ class PolkadotApi {
    */
 <span class="fstat-no" title="function not covered" >  as</span>ync signMessage (message, signer) {
     // Get signer
-<span class="cstat-no" title="statement not covered" >    await web3Enable(process.env.APP_NAME)</span>
+<span class="cstat-no" title="statement not covered" >    await web3Enable(this.appName)</span>
     const injector = <span class="cstat-no" title="statement not covered" >await web3FromAddress(signer)</span>
 &nbsp;
     // Create Message
@@ -533,7 +536,7 @@ class PolkadotApi {
   */
 <span class="fstat-no" title="function not covered" >  as</span>ync requestUsers () {
     // (this needs to be called first, before other requests)
-<span class="cstat-no" title="statement not covered" >    await web3Enable(process.env.APP_NAME)</span>
+<span class="cstat-no" title="statement not covered" >    await web3Enable(this.appName)</span>
     // meta.source contains the name of the extension that provides this account
 <span class="cstat-no" title="statement not covered" >    return web3Accounts()</span>
   }
@@ -575,7 +578,7 @@ class PolkadotApi {
    */
 <span class="fstat-no" title="function not covered" >  as</span>ync setWeb3Signer (user) {
     // Enable web3 plugin
-<span class="cstat-no" title="statement not covered" >    await web3Enable(process.env.APP_NAME)</span>
+<span class="cstat-no" title="statement not covered" >    await web3Enable(this.appName)</span>
     // Get injector to call a Extrinsic
     const injector = <span class="cstat-no" title="statement not covered" >await web3FromAddress(user)</span>
     // Set signer
@@ -592,7 +595,7 @@ module.exports = PolkadotApi
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-08-10T22:30:14.544Z
+                at 2022-08-12T18:21:51.761Z
             </div>
         <script src="../prettify.js"></script>
         <script>

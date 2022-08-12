@@ -7,7 +7,12 @@ let marketplaceApi
 
 describe('Connect with hashedChain', () => {
   test('Create PolkadotApi instance', async () => {
-    polkadotApi = new PolkadotApi('wss://n1.hashed.systems')
+    polkadotApi = new PolkadotApi(
+      {
+        chainURI: 'wss://n1.hashed.systems',
+        appName: 'Hashed test',
+      }
+    )
     await polkadotApi.connect()
     expect(polkadotApi !== undefined)
   })
