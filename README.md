@@ -12,7 +12,10 @@ To connect to hashed chain we can use an instanfe of [PolkadotApi](https://githu
 ```
 import { PolkadotApi } from '@jmgayosso/hashed-polkadot-api'
 
-const polkadotApi = new PolkadotApi('wss://n1.hashed.systems')
+const polkadotApi = new PolkadotApi({
+  chainURI: 'wss://n1.hashed.systems',
+  appName: 'Hashed portal'
+})
 await polkadotApi.connect()
 ```
 
