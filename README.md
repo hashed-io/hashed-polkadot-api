@@ -1,14 +1,14 @@
 **Hashed Polkadot API**
 
-This client api is used to interact with gatedMarketplace pallet, this allow do quickly connection, queries and calls to TX to this pallet.
+This client api is used to interacting with gatedMarketplace pallet, this allows quick connection, queries and calls to TX on this pallet.
 
-To install the hashed polkadot api api run the following command:
+To install the hashed polkadot api, run the following command:
 
 `npm i --save @jmgayosso/hashed-polkadot-api`
 or
 `yarn add --save @jmgayosso/hashed-polkadot-api`
 
-To connect to hashed chain we can use an instanfe of [PolkadotApi](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadotApi.js) that handles the conection and provide methods to sign tx, requestUsers from polkadotJS and sign and verify messages.
+To connect to 'hashed chain' we can use an instance of [PolkadotApi](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadotApi.js) that handles the connection and provides methods to sign tx, requestUsers from polkadotJS and sign and verify messages.
 ```
 import { PolkadotApi } from '@jmgayosso/hashed-polkadot-api'
 
@@ -20,7 +20,7 @@ await polkadotApi.connect()
 ```
 
 
-PolkadotApi is requeried to create an instace of [MarketplaceApi](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadot-pallets/marketplaceApi.js), this class provide all methods to interact with gatedMarketplace pallet.
+PolkadotApi is requeried to create an instance of [MarketplaceApi](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadot-pallets/marketplaceApi.js), this class provides all methods to interact with gatedMarketplace pallet.
 ```
 import { PolkadotApi, MarketplaceApi } from '@jmgayosso/hashed-polkadot-api'
 
@@ -30,11 +30,11 @@ await polkadotApi.connect()
 const marketplaceApi = new MarketplaceApi(polkadotApi)
 ```
 
-Once created an instance of MarketplaceApi the followings methods can be accessed.
+Once an instance of MarketplaceApi is created, the following methods can be accessed.
 
 **MarketplaceApi**
 
-* [getMarketplaceById](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadot-pallets/marketplaceApi.js#L16): Get matkeplace general details by marketplaceId
+* [getMarketplaceById](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadot-pallets/marketplaceApi.js#L16): Get marketplace's general details by marketplaceId
 ```
 await marketplaceApi.getMarketplaceById({
   marketId: '0xa54035afb49b42cdacbe27c830dd1b66078069886e80cdd8bab3d139caa0489e'
@@ -63,14 +63,14 @@ await marketplaceApi.getMyMarketplaces({
 })
 ```
 
-* [getParticipantsByMarket](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadot-pallets/marketplaceApi.js#L156): Get matkeplace's participants by marketplace
+* [getParticipantsByMarket](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadot-pallets/marketplaceApi.js#L156): Get marketplace's participants by marketplace
 ```
 await marketplaceApi.getParticipantsByMarket({
   marketId: '0xa54035afb49b42cdacbe27c830dd1b66078069886e80cdd8bab3d139caa0489e'
 })
 ```
 
-* [applyFor](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadot-pallets/marketplaceApi.js#L220): This function call apply extrinsic
+* [applyFor](https://github.com/hashed-io/hashed-polkadot-api/blob/master/src/model/polkadot-pallets/marketplaceApi.js#L220): This function calls to 'apply' extrinsic
 ```
 await marketplaceApi.applyFor({
   marketId,
