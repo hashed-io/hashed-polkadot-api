@@ -333,103 +333,114 @@ class MarketplaceApi extends BasePolkadotApi {
 
     return mapApplicationsDetails
   }
-  // /**
-  //  * @name getXpubByUser
-  //  * @description Get Xpub by user
-  //  * @param {String} xpubId Xpub id
-  //  * @param {Function} subTrigger Function to trigger when subscription detect changes
-  //  * @returns {Object}
-  //  * { id, xpub }
-  //  */
-  // getXpubById (xpubId, subTrigger) {
-  //   // return this.polkadotApi.api.query.nbvStorage.xpubs(xpubId, subTrigger)
-  //   return this.exQuery('xpubs', xpubId, subTrigger)
-  // }
+  /*
+  * Offers extrinsic
+  */
 
-  // /**
-  //  * @name getVaultsByUser
-  //  * @description Get all vaults where user is owner or cosigner
-  //  * @param {String} user User address
-  //  * @returns {Array} array of vaults Id
-  //  * [{ id }]
-  //  */
-  // getVaultsByUser ({ user, subTrigger }) {
-  //   return this.exQuery('vaultsBySigner', user, subTrigger)
-  //   // return this.polkadotApi.api.derive.nbvStorage.vaults(user)
-  // }
+  async enlistBuyOffer ({ user, marketplaceId, collectionId, itemId, price }) {
+    return this.callTx('enlistBuyOffer', user, [marketplaceId, collectionId, itemId, price])
+  }
 
-  // /**
-  //  * @name getVaultsById
-  //  * @description Get an array of vaults details
-  //  * @param {String} Ids Array of vaults id
-  //  * @param {Function} subTrigger Function to trigger when subscription detect changes
-  //  * @returns {Array} list vaults array
-  //  * [{ id, description, descriptor, owner, cosigners }]
-  //  */
-  // getVaultsById ({ Ids, subTrigger }) {
-  //   // return this.exQuery('vaults', Ids, subTrigger)
-  //   return this.exMultiQuery('vaults', Ids, subTrigger)
-  //   // return this.polkadotApi.api.derive.nbvStorage.vaults(user)
-  // }
+  async enlistSellOffer ({ user, marketplaceId, collectionId, itemId, price }) {
+    return this.callTx('enlistSellOffer', user, [marketplaceId, collectionId, itemId, price])
+  }
 
-  // /**
-  //  * @name createVault
-  //  * @description Create a new vault
-  //  * @param {String} user user address
-  //  * @returns undefined
-  //  */
-  // async createVault ({ threshold, description, cosigners, user }) {
-  //   // Call Extrinsic
-  //   return this.callTx('createVault', user, [threshold, description, cosigners])
-  // }
+  async removeOffer ({ offerId, marketplaceId, collectionId, itemId }) {
+    return this.callTx('removeOffer', offerId, marketplaceId, collectionId, itemId)
+  }
 
-  // /**
-  // * @name removeVault
-  // * @description Remove a vault
-  // * @param {String} id Vault id
-  // * @returns undefined
-  // */
-  // async removeVault ({ id, user }) {
-  //   // Call Extrinsic
-  //   return this.callTx('removeVault', user, [id])
-  // }
+  async takeBuyOffer ({ offerId, marketplaceId, collectionId, itemId }) {
+    return this.callTx('takeBuyOffer', offerId, marketplaceId, collectionId, itemId)
+  }
 
-  // /**
-  //  * @name submitXPUB
-  //  * @description Set XPUB for a user
-  //  * @param {String} user user address
-  //  * @returns undefined
-  //  */
-  // async submitXPUB ({ user, XPUB }) {
-  //   // Call Extrinsic
-  //   return this.callTx('setXpub', user, [XPUB])
-  // }
+  async takeSellOffer ({ offerId, marketplaceId, collectionId, itemId }) {
+    return this.callTx('takeSellOffer', offerId, marketplaceId, collectionId, itemId)
+  }
 
-  // /**
-  //  * @name removeXpub
-  //  * @description Remove XPUB for a user
-  //  * @param {String} user user address
-  //  * @returns undefined
-  //  */
-  // async removeXpub ({ user }) {
-  //   // Call Extrinsic
-  //   return this.callTx('removeXpub', user)
-  // }
+  /**
+   * Offers queries
+   */
 
-  // /**
-  //  * @name createProposal
-  //  * @description Create new proposal for a vault
-  //  * @param {String} signer user address to sign
-  //  * @param {String} vaultId vault Id
-  //  * @param {String} recipientAddress user address to receive BTC
-  //  * @param {String} satoshiAmount Satoshi amount
-  //  * @returns undefined
-  //  */
-  // async createProposal ({ vaultId, recipientAddress, satoshiAmount, signer }) {
-  //   // Call Extrinsic
-  //   const params = [vaultId, recipientAddress, satoshiAmount]
-  //   return this.callTx('propose', signer, params)
-  // }
+  /**
+   * Method to get all the offers availables
+   * @param {Function} subTrigger Function to trigger when subscription detect changes [optional  ]
+   * @returns {Array} Array of Offer Data [OfferData]
+   */
+  async getAllOffers (subTrigger) {
+    const allOffers = await this.exEntriesQuery('offersInfo', [], subTrigger)
+    const offersMap = this.mapEntries(allOffers)
+    return offersMap
+  }
+
+  /**
+   * Method to get an specific offer
+   * @param {Integer} offerId ID of the offer
+   * @param {Function} subTrigger Function to trigger when subscription detect changes [Optional]
+   * @returns {Object} Object containing the offer data [OfferData]
+   */
+  async getOffer ({ offerId }, subTrigger) {
+    const allOffers = await this.exQuery('offersInfo', [offerId], subTrigger)
+    if (!allOffers.isEmpty) {
+      return allOffers.toHuman()
+    }
+    return undefined
+  }
+
+  /**
+   * Get an specific offer from specific marketplace
+   * @param {marketplaceId} marketId ID of the Marketplace
+   * @param {Function} subTrigger Function to trigger when subscription detect changes [Optional]
+   * @returns {Array} offers Ids
+   */
+  async getOfferByMarketplace ({ marketplaceId }, subTrigger) {
+    const offersByMarketplace = await this.exQuery('offersByMarketplace', [marketplaceId], subTrigger)
+    if (!offersByMarketplace.isEmpty) {
+      return offersByMarketplace.map(offer => offer.toHuman())
+    }
+    return []
+  }
+
+  /**
+   *  Get all the offers with the marketplace Id
+   * @returns {Array of Object} Each object contain a vector with the marketplace Id and the offer Id
+   *
+   */
+  async getOffersByMarketplace (subTrigger) {
+    const offersByMarketplace = await this.exEntriesQuery('offersByMarketplace', [], subTrigger)
+    return this.mapEntries(offersByMarketplace)
+  }
+
+  /**
+   *
+   * @param {Integer} collectionId Id of the collection
+   * @param {Integer} itemId Id of the item
+   * @returns {Array} Array containing the offer Id
+   */
+  async getOffersByItem ({ collectionId, itemId }, subTrigger) {
+    const offersByItem = await this.exQuery('offersByItem', [collectionId, itemId], subTrigger)
+    return offersByItem.toHuman()
+  }
+
+  /**
+   * Get the Offer id given an polkadot address
+   * @param {String} address Polkadot Address
+   * @return {Array} Array containing the offer Id
+  */
+  async getOfferByAccount ({ address }, subTrigger) {
+    const offersByAccount = await this.exQuery('offersByAccount', [address], subTrigger)
+    return offersByAccount.toHuman()
+  }
+
+  /**
+   * Get all the offers with the associated account
+   * @return {Array} With offer id & account address
+   */
+
+  async getOffersByAccount (subTrigger) {
+    const offersByAccount = await this.exEntriesQuery('offersByAccount', [], subTrigger)
+    const offersByAccountMap = this.mapEntries(offersByAccount)
+    return offersByAccountMap
+  }
 }
 
 // export default MarketplaceApi
