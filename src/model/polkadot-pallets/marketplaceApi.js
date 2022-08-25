@@ -337,22 +337,61 @@ class MarketplaceApi extends BasePolkadotApi {
   * Offers extrinsic
   */
 
+  /**
+   * Create Buy Offer, only marketplace participant is allowed to call this method
+   * @param {String} user Address of the user who sign the Transaction
+   * @param {String} marketplaceId Id of the Marketplace
+   * @param {String} collectionId Id of the collection
+   * @param {String} itemId Id of the itemId
+   * @param {Integer} price Sale price [Must be greater than 10,000] 
+   * @returns response of the transaction
+   */
   async enlistBuyOffer ({ user, marketplaceId, collectionId, itemId, price }) {
     return this.callTx('enlistBuyOffer', user, [marketplaceId, collectionId, itemId, price])
   }
-
+  /**
+   * Create a sell offer, only the owner of the NFT can execute this method.
+   * @param {String} user Address of the user who sign the Transaction
+   * @param {String} marketplaceId Id of the Marketplace
+   * @param {String} collectionId Id of the collection
+   * @param {String} itemId Id of the itemId
+   * @param {Integer} price Sale price [Must be greater than 10,000]
+   * @returns response of the transaction
+   */
   async enlistSellOffer ({ user, marketplaceId, collectionId, itemId, price }) {
     return this.callTx('enlistSellOffer', user, [marketplaceId, collectionId, itemId, price])
   }
-
+  /**
+   * Only the owner of the Offer can execute this method.
+   * This method remove the offer from the list of offers
+   * @param {Integer} offerId  
+   * @returns 
+   */
   async removeOffer ({ offerId, marketplaceId, collectionId, itemId }) {
     return this.callTx('removeOffer', offerId, marketplaceId, collectionId, itemId)
   }
 
+  /**
+   * Only the owner of the offer can execute this method.
+   * This method accept an offer from market participants and execute the transfer
+   * @param {String} offerID
+   * @param {String} marketplaceId
+   * @param {String} collectionId
+   * @param {String} itemId
+   * @returns  response of the transaction
+   */
   async takeBuyOffer ({ offerId, marketplaceId, collectionId, itemId }) {
     return this.callTx('takeBuyOffer', offerId, marketplaceId, collectionId, itemId)
   }
-
+  /**
+   * Only the market participant can execute this method.
+   * This method accept an offer from the owner of the NFT and execute the transfer
+   * @param {String} offerID
+   * @param {String} marketplaceId
+   * @param {String} collectionId
+   * @param {String} itemId
+   * @returns  response of the transaction
+   */
   async takeSellOffer ({ offerId, marketplaceId, collectionId, itemId }) {
     return this.callTx('takeSellOffer', offerId, marketplaceId, collectionId, itemId)
   }
