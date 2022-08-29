@@ -4,7 +4,6 @@ const { MarketplaceApi } = require('../src/model/polkadot-pallets')
 jest.setTimeout(40000)
 let polkadotApi
 let marketplaceApi
-
 describe('Connect with hashedChain', () => {
   test('Create PolkadotApi instance', async () => {
     polkadotApi = new PolkadotApi(
