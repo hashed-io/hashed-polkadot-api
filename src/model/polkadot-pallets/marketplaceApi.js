@@ -441,7 +441,7 @@ class MarketplaceApi extends BasePolkadotApi {
 
   /**
    *  Get all the offers with the marketplace Id
-   * @returns {Array of Object} Each object contain a vector with the marketplace Id and the offer Id
+   * @returns {Array <Object>} Each object contain a vector with the marketplace Id and the offer Id
    *
    */
   async getOffersByMarketplace (subTrigger) {
@@ -479,6 +479,26 @@ class MarketplaceApi extends BasePolkadotApi {
     const offersByAccount = await this.exEntriesQuery('offersByAccount', [], subTrigger)
     const offersByAccountMap = this.mapEntries(offersByAccount)
     return offersByAccountMap
+  }
+
+  /**
+   * Special Queries
+   */
+
+  /** 
+   * @name createAsset
+   * @description Create a new frunique/NFT asset 
+   * @param {u64} collectionId Collection ID used in the uniques pallet; represents a group of Uniques
+   * @param {u64} assetId [optional] Asset ID used in the uniques pallet; represents a single asset. If not provided, the next available unique ID will be automatically selected.
+   * @param {Object} uniquesPublicAttributes mapping of key/value pairs to be set in the public metadata in the uniques pallet
+   * @param {Object} plaintextSaveToIPFS payload and/or files to be saved to IPFS, and the resulting CIDs are added to the uniquesPublicMetadata, anchoring the data to the NFT. 
+   * @param {Object} encryptThenSaveToIPFS payload and/or files to be saved encrypted, saved to IPFS, and the resulting CIDs are added to the uniquesPublicMetadata, anchoring the data to the NFT. 
+   * @param {Function} subTrigger Function to trigger when subscription detect changes
+   * @returns {Object}
+   */
+   async createAsset ( {collectionId, assetId, uniquesPublicAttributes, plaintextSaveToIPFS, encryptoThenSaveToIPFS}, subTriger){
+
+
   }
 }
 
