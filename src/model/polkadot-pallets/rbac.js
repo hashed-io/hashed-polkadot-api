@@ -17,7 +17,8 @@ class Rbac extends BasePolkadotApi {
    * }
    */
   async getPalletScopes ({ palletId }, subTrigger) {
-    return this.exQuery('scopes', [palletId], subTrigger)
+    const scopes = await this.exQuery('scopes', [palletId], subTrigger) 
+    return scopes.toHuman()
   }
 
   /**
@@ -36,7 +37,17 @@ class Rbac extends BasePolkadotApi {
    * @returns {Object} Object with property "roles"
    */
   async getRoleById ({ roleId }, subTrigger) {
-    return this.exQuery('roles', [roleId], subTrigger)
+    const roles = await this.exQuery('roles', [roleId], subTrigger) 
+    return roles.toHuman()
+  }
+  /**
+   * Get all stored roles [Without role id]
+   * @param {Function} subTrigger 
+   */
+  async getRolesById(subTrigger){
+    const allRoles = await this.exEntriesQuery('roles', [], subTrigger)
+    const allRolesMap = this.mapEntries(allRoles)
+    return allRolesMap
   }
   /**
    * Get all the Roles associated with the pallet
@@ -63,7 +74,8 @@ class Rbac extends BasePolkadotApi {
    *  }
    */
   async getAllRolesIdsInPallet({ palletId }, subTrigger) {
-    return this.exQuery('palletRoles', [palletId], subTrigger)
+    const allRolesInPallet = await this.exQuery('palletRoles', [palletId], subTrigger)
+    return allRolesInPallet.toHuman()
   }
   /**
    * Get all the roles ids linked to all pallets
@@ -71,7 +83,7 @@ class Rbac extends BasePolkadotApi {
    * @returns {Array} Array of Object containing pallet Id & Roles ids
    */
   async getAllRolesIdsInAllPallets(subTrigger){
-    const allPalletRoles = this.exEntriesQuery('palletRoles', [], subTrigger)
+    const allPalletRoles = await this.exEntriesQuery('palletRoles', [], subTrigger)
     return this.mapEntries(allPalletRoles)
   }
   /**
@@ -81,7 +93,8 @@ class Rbac extends BasePolkadotApi {
    * return {String} permission
    */
   async getPermission({palletId, permissionId}, subTrigger) {
-    return this.exQuery('permissions', [palletId, permissionId], subTrigger)
+    const permission = await this.exQuery('permissions', [palletId, permissionId], subTrigger) 
+    return permission.toHuman()
   }
   /**
    * Get all the permsissions from pallet
@@ -89,7 +102,7 @@ class Rbac extends BasePolkadotApi {
    * @returns {Array} Array of objects containing the 
    */
   async getAllPermissionsFromPallet({ palletId }, subTrigger) {
-    const allPalletPermissions = this.exEntriesQuery('permissions', [palletId], subTrigger)
+    const allPalletPermissions = await this.exEntriesQuery('permissions', [palletId], subTrigger)
     return this.mapEntries(allPalletPermissions)
   }
   /**
@@ -97,7 +110,8 @@ class Rbac extends BasePolkadotApi {
    * @param {*} param0 
    */
   async getPermissionByRole({ palletId, roleId }, subTrigger) {
-    return this.exQuery('permissionsByRole', [palletId, roleId], subTrigger)
+    const permissionsByRole = await this.exQuery('permissionsByRole', [palletId, roleId], subTrigger)
+    return permissionsByRole.toHuman()
   }
 
 /**
@@ -107,7 +121,7 @@ class Rbac extends BasePolkadotApi {
  * @returns 
  */
   async getAllRolesFromPallet({ palletId }, subTrigger){
-    const allPalletPermissionsByRole = this.exEntriesQuery('permissionsByRole', [palletId], subTrigger)
+    const allPalletPermissionsByRole = await this.exEntriesQuery('permissionsByRole', [palletId], subTrigger)
     return this.mapEntries(allPalletPermissionsByRole)
   }
   /**
@@ -119,7 +133,8 @@ class Rbac extends BasePolkadotApi {
    * @return {Array} Role id is returned
    */
   async getRolesByUser({ accountId, palletId, scopeId }, subTrigger){
-    return this.exQuery('rolesByUser', [accountId, palletId, scopeId], subTrigger)
+    const rolesByUser = await this.exQuery('rolesByUser', [accountId, palletId, scopeId], subTrigger)
+    return rolesByUser.toHuman()
   }
   /**
    * Get which users have the role in a pallet scope
@@ -130,7 +145,7 @@ class Rbac extends BasePolkadotApi {
    * @returns {Array} Address of the account
    */
   async getRoleInPalletScope({ palletId, scopeId, roleId }, subTrigger) {
-    const usersByScope = this.exQuery('usersByScope', [palletId, scopeId, roleId], subTrigger)
+    const usersByScope = await this.exQuery('usersByScope', [palletId, scopeId, roleId], subTrigger)
     return usersByScope.toHuman()
   }
   /**** Get scope users by role
@@ -138,8 +153,8 @@ class Rbac extends BasePolkadotApi {
    * @param {String} roleId
    * @param {*} param0 
    */
-  async getScopeUsersByRole({ palletId, scopeId}){
-    const scopeUsersByRole = this.exEntriesQuery('usersByScope', [palletId, scopeId], subTrigger )
+  async getScopeUsersByRole({ palletId, scopeId}, subTrigger){
+    const scopeUsersByRole = await this.exEntriesQuery('usersByScope', [palletId, scopeId], subTrigger )
     return this.mapEntries(scopeUsersByRole)
   }
 }
